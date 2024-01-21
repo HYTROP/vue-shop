@@ -1,12 +1,13 @@
 <script setup>
 defineProps({
+  id: Number,
   title: String,
   imageUrl: String,
   price: Number,
   isFavorite: Boolean,
   isAdded: Boolean,
-  onClickAdd: Function,
-  onClickFavorite: Function
+  onClickFavorite: Function,
+  onClickAdd: Function
 })
 </script>
 
@@ -20,7 +21,7 @@ defineProps({
       alt="Like 1"
       class="absolute top-4 left-4"
     />
-    <img :src="imageUrl" alt="Sneakers" />
+    <img :src="imageUrl" alt="Sneakers" class="max-h-[170px]" />
 
     <p class="mt-6">{{ title }}</p>
 

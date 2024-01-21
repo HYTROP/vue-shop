@@ -1,25 +1,32 @@
 <script setup>
 import DrawerHead from './DrawerHead.vue'
 import CartItemList from './CartItemList.vue'
+
+defineProps({
+  totalPrice: Number,
+  taxesSum: Number
+})
 </script>
 
 <template>
   <div class="fixed top-0 left-0 h-full w-full bg-black/50 z-10"></div>
-  <div class="bg-white w-76 fixed top-0 right-0 h-full z-20 p-4">
+  <div class="bg-white min-w-[386px] fixed top-0 right-0 h-full z-20 p-4">
     <DrawerHead />
+
     <CartItemList />
-    <div class="bottom-0">
+
+    <div class="fixed bottom-8 w-[356px]">
       <div class="flex flex-col gap-4 mb-6">
         <div class="flex gap-2">
           <span>Итого: </span>
           <div class="flex-1 border-b border-dashed"></div>
-          <b>12318 руб.</b>
+          <b>{{ Math.round(totalPrice) }} руб.</b>
         </div>
 
         <div class="flex gap-2">
           <span>Налог 5%: </span>
           <div class="flex-1 border-b border-dashed"></div>
-          <b>123 руб.</b>
+          <b>{{ Math.round(taxesSum) }} руб.</b>
         </div>
       </div>
       <button
