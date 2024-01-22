@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch, reactive, provide } from 'vue'
+import { onMounted, ref, watch, reactive, provide, computed } from 'vue'
 import axios from 'axios'
 
 import HeaderComp from './components/HeaderComp.vue'
@@ -8,8 +8,13 @@ import DrawerComp from './components/DrawerComp.vue'
 
 const items = ref([])
 const cart = ref([])
-
+const isCreatedOrder = ref(false)
 const drawerOpen = ref(false)
+
+const filters = reactive({
+  sortBy: 'title',
+  searchQuery: ''
+})
 
 const totalPriceSum = () => {
   return cart.value.reduce((acc, item) => acc + item.price, 0)
@@ -17,6 +22,12 @@ const totalPriceSum = () => {
 const taxesSum = () => {
   return totalPriceSum() * 0.05
 }
+
+const cartIsEmpty = computed(() => {
+  return cart.value.length === 0
+})
+
+const cartButtonDisabled = computed(() => isCreatedOrder.value || cartIsEmpty.value)
 
 const openDrawer = () => {
   drawerOpen.value = true
@@ -35,6 +46,24 @@ const removeFromCart = (item) => {
   item.isAdded = false
 }
 
+const createOrder = () => {
+  try {
+    isCreatedOrder.value = true
+    const { data } = axios.post(`https://de475c8949732766.mokky.dev/orders`, {
+      items: cart.value,
+      totalPriceSum: totalPriceSum.value
+    })
+
+    cart.value = []
+
+    return data
+  } catch (error) {
+    console.error(error)
+  } finally {
+    isCreatedOrder.value = false
+  }
+}
+
 const onClickAddToCart = (item) => {
   if (!item.isAdded) {
     addToCart(item)
@@ -42,11 +71,6 @@ const onClickAddToCart = (item) => {
     removeFromCart(item)
   }
 }
-
-const filters = reactive({
-  sortBy: 'title',
-  searchQuery: ''
-})
 
 const onChangeSelect = (event) => {
   filters.sortBy = event.target.value
@@ -128,8 +152,14 @@ onMounted(async () => {
   await fetchItems()
   await fetchFavorites()
 })
-watch(filters, fetchItems)
 
+watch(filters, fetchItems)
+watch(cart, () => {
+  items.value = items.value.map((item) => ({
+    ...item,
+    isAdded: false
+  }))
+})
 provide('cartActions', {
   cart,
   closeDrawer,
@@ -144,6 +174,8 @@ provide('cartActions', {
     v-if="drawerOpen"
     :total-price="totalPriceSum() + taxesSum()"
     :taxes-sum="taxesSum()"
+    @create-order="createOrder()"
+    :button-disabled="cartButtonDisabled"
   />
 
   <div class="bg-white w-4/5 m-auto rounded-xl shadow-xl mt-14 mb-14">
