@@ -11,39 +11,18 @@ const filters = reactive({
   searchQuery: ''
 })
 
-const onClickAddToCart = (item) => {
-  if (!item.isAdded) {
-    addToCart(item)
-  } else {
-    removeFromCart(item)
-  }
-}
-
 const onChangeSelect = (event) => {
   filters.sortBy = event.target.value
 }
 const onChangeSearchInput = (event) => {
   filters.searchQuery = event.target.value
 }
-const addToFavorite = async (item) => {
-  try {
-    if (!item.isFavorite) {
-      const obj = { favId: item.id, item }
 
-      item.isFavorite = true
-
-      const { data } = await axios.post(`https://de475c8949732766.mokky.dev/favorites`, obj)
-
-      item.favoriteId = data.id
-    } else {
-      item.isFavorite = false
-
-      await axios.delete(`https://de475c8949732766.mokky.dev/favorites/${item.favoriteId}`)
-
-      item.favoriteId = null
-    }
-  } catch (error) {
-    console.error(error)
+const onClickAddToCart = (item) => {
+  if (!item.isAdded) {
+    addToCart(item)
+  } else {
+    removeFromCart(item)
   }
 }
 
@@ -72,12 +51,34 @@ const fetchItems = async () => {
   }
 }
 
+const addToFavorite = async (item) => {
+  try {
+    if (!item.isFavorite) {
+      const obj = { favId: item.id, item }
+
+      item.isFavorite = true
+
+      const { data } = await axios.post(`https://de475c8949732766.mokky.dev/favorites`, obj)
+
+      item.favoriteId = data.id
+    } else {
+      item.isFavorite = false
+
+      await axios.delete(`https://de475c8949732766.mokky.dev/favorites/${item.favoriteId}`)
+
+      item.favoriteId = null
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const fetchFavorites = async () => {
   try {
     const { data: favorites } = await axios.get(`https://de475c8949732766.mokky.dev/favorites`)
 
     items.value = items.value.map((item) => {
-      const favoriteItem = favorites.find((favoriteItem) => favoriteItem.item_id === item.id)
+      const favoriteItem = favorites.find((favoriteItem) => favoriteItem.id === item.id)
 
       if (!favoriteItem) {
         return item
@@ -96,7 +97,10 @@ const fetchFavorites = async () => {
 
 onMounted(async () => {
   const localStorageCart = localStorage.getItem('cart')
-  cart.value = localStorageCart ? JSON.parse(localStorageCart) : []
+  // cart.value = localStorageCart ? JSON.parse(localStorageCart) : []
+  if (localStorageCart) {
+    cart.value = JSON.parse(localStorageCart)
+  }
 
   await fetchItems()
   await fetchFavorites()
