@@ -97,10 +97,7 @@ const fetchFavorites = async () => {
 
 onMounted(async () => {
   const localStorageCart = localStorage.getItem('cart')
-  // cart.value = localStorageCart ? JSON.parse(localStorageCart) : []
-  if (localStorageCart) {
-    cart.value = JSON.parse(localStorageCart)
-  }
+  cart.value = localStorageCart ? JSON.parse(localStorageCart) : []
 
   await fetchItems()
   await fetchFavorites()
