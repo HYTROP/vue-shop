@@ -5,7 +5,7 @@ const { closeDrawer } = inject('cartActions')
 </script>
 
 <template>
-  <div class="flex items-center gap-4 mb-4">
+  <div class="flex items-center gap-4 mb-4 h-10">
     <svg
       @click="closeDrawer"
       class="opacity-30 cursor-pointer rotate-180 hover:opacity-100"

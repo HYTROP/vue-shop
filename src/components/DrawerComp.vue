@@ -44,9 +44,9 @@ const buttonDisabled = computed(() => isCreatedOrder.value || cartIsEmpty.value)
 </script>
 
 <template>
-  <div class="fixed top-0 left-0 h-full w-full bg-black/50 z-10"></div>
-  <div class="bg-white min-w-[386px] fixed top-0 right-0 h-full z-20 p-4">
-    <DrawerHead />
+  <div class="fixed top-0 left-0 h-full w-full bg-black/50 z-10" v-auto-animate></div>
+  <div class="bg-white min-w-[386px] fixed top-0 right-0 h-full z-20 p-4 overflow-auto">
+    <DrawerHead class="sticky h-20 -top-5 z-20 bg-white" />
 
     <div v-if="!totalPrice || orderID" class="flex h-full items-center">
       <InfoBlock
@@ -63,10 +63,10 @@ const buttonDisabled = computed(() => isCreatedOrder.value || cartIsEmpty.value)
       />
     </div>
 
-    <div v-else>
+    <div v-else class="flex flex-col max-w-[356px]">
       <CartItemList />
 
-      <div class="fixed bottom-8 w-[356px]">
+      <div class="sticky -bottom-4 w-[356px] bg-white opacity-100">
         <div class="flex flex-col gap-4 mb-6">
           <div class="flex gap-2">
             <span>Итого: </span>
