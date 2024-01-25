@@ -2,8 +2,7 @@
 import CardComp from './CardComp.vue'
 
 defineProps({
-  items: Array,
-  isFavorite: Boolean
+  items: Array
 })
 
 const emit = defineEmits(['addToFavorite', 'addToCart'])

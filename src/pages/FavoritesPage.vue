@@ -18,10 +18,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <CardList
-    :items="favorites"
-    is-favotites
-    :add-to-cart="addToCart"
-    :remove-from-cart="removeFromCart"
-  />
+  <CardList :items="favorites" v-if="favorites.length" />
+  <p v-else>В избранном пока ничего нет</p>
 </template>
