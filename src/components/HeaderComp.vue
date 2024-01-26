@@ -7,7 +7,9 @@ defineProps({
 </script>
 
 <template>
-  <header class="lg:flex md:flex justify-between border-b border-slate-300 px-8 py-8">
+  <header
+    class="lg:flex md:flex justify-between border-b border-slate-300 px-8 py-8 sm:px-4 sm:py-4"
+  >
     <router-link to="/">
       <div class="flex items-center sm:m-4">
         <img src="/logo.png" alt="Logo" class="w-10 mr-4" />
