@@ -124,10 +124,10 @@ watch(filters, fetchItems)
 </script>
 
 <template>
-  <div class="flex justify-between items-center">
+  <div class="sd:grid-auto-flow md:flex justify-between items-center">
     <h2 class="text-3xl font-bold">Все кроссовки</h2>
 
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-4 sm:grid-auto-flow grid-flow-col">
       <select @change="onChangeSelect" class="py-2 px-2 border rounded-md outline-none">
         <option value="name">По названию</option>
         <option value="price">По цене ( дешевые )</option>
