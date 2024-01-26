@@ -58,7 +58,7 @@ provide('cartActions', {
 
     <HeaderComp :total-price="totalPrice()" @open-drawer="openDrawer" />
 
-    <div class="sm:grid-auto-flow p-4">
+    <div class="p-4">
       <router-view></router-view>
     </div>
   </div>

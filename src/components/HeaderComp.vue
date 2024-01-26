@@ -7,9 +7,9 @@ defineProps({
 </script>
 
 <template>
-  <header class="flex justify-between border-b border-slate-300 px-8 py-8">
+  <header class="lg:flex md:flex justify-between border-b border-slate-300 px-8 py-8">
     <router-link to="/">
-      <div class="flex items-center">
+      <div class="flex items-center sm:m-4">
         <img src="/logo.png" alt="Logo" class="w-10 mr-4" />
         <div>
           <h2 class="text-xl font-bold uppercase">Vue Shop</h2>
@@ -18,17 +18,17 @@ defineProps({
       </div>
     </router-link>
 
-    <ul class="flex items-center gap-10">
+    <ul class="lg:flex items-center gap-10">
       <li
         @click="() => emit('openDrawer')"
-        class="flex items-center gap-3 cursor-pointer text-slate-400 hover:text-black"
+        class="flex mb-2 items-center gap-3 cursor-pointer text-slate-400 hover:text-black"
       >
         <img src="/cart.svg" alt="Cart" />
         <b>{{ totalPrice }} руб.</b>
       </li>
 
       <router-link to="/favorites">
-        <li class="flex items-center gap-3 cursor-pointer text-slate-400 hover:text-black">
+        <li class="flex mb-2 items-center gap-3 cursor-pointer text-slate-400 hover:text-black">
           <img src="/heart.svg" alt="Favorite" />
           <span>Закладки</span>
         </li>
